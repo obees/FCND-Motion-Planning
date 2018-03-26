@@ -53,6 +53,8 @@ def a_star_graph(graph, heuristic, start, goal):
             path.append(branch[n][1])
             n = branch[n][1]
         path.append(branch[n][1])
+    else:
+        print('Path NOT Found ... Run again to generate new random nodes ...')
     return path[::-1], path_cost
 
 class Poly:

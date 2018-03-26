@@ -210,15 +210,19 @@ class MotionPlanning(Drone):
         # Giving access to polygon.contains and polygon.crosses methods
         polygons = sampler._polygons
 
-        # sampling 200 points and removing
+        # sampling random_points_quantity points and removing
         # ones conflicting with obstacles.
         # Adding grid_start and grid_goal allows to verify against obstacle collision early
-        nodes = sampler.sample(300, grid_start, grid_goal)
-        #print(nodes)
+        random_points_quantity = 400
+        print('Generating {} random nodes ...'.format(random_points_quantity))
+        nodes = sampler.sample(random_points_quantity, grid_start, grid_goal)
+
         # create graph from possible states, obstacle polygons, and edges to 10 closest states
+        print("Creating a graph from random nodes ...")
         g = self.create_graph(nodes, 10, polygons)
-        #print(g.nodes)
+
         #Search a path using graph adapted A* algorithm
+        print("Searching for a path from start to goal in graph ...")
         path, cost = a_star_graph(g, heuristic, grid_start, grid_goal)
 
         # TODO: prune path to minimize number of waypoints
